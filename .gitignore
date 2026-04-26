@@ -1,0 +1,10 @@
+node_modules/
+.env
+dist/
+.DS_Store
+*.local
+frontend/node_modules/
+backend/node_modules/
+frontend/dist/
+backend/dist/
+antigravity.json
