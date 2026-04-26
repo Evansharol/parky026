@@ -178,49 +178,53 @@ export default function HomePage() {
             Now live in 35+ cities across India
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-black leading-tight mb-6 animate-slide-up">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black leading-tight mb-6 animate-slide-up">
             Park Smarter,{' '}
             <span className="text-gradient">Not Harder</span>
           </h1>
-          <p className="text-xl text-slate-500 mb-12 max-w-2xl mx-auto leading-relaxed animate-slide-in font-medium" style={{ animationDelay: '0.1s' }}>
+          <p className="text-base sm:text-xl text-slate-500 mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed animate-slide-in font-medium px-2" style={{ animationDelay: '0.1s' }}>
             Airbnb for parking spaces. Find, book, and pay for private and public parking in seconds — or earn money by renting yours.
           </p>
           
-          <form onSubmit={handleSearch} className="animate-slide-in" style={{ animationDelay: '0.2s' }}>
-            <div className="flex items-center gap-3 bg-white border border-slate-200 shadow-xl px-5 py-3 rounded-2xl max-w-2xl mx-auto focus-within:ring-2 focus-within:ring-indigo-500/20 transition-all">
-              <Search className="w-5 h-5 text-slate-400 flex-shrink-0" />
-              {hasGoogleKey ? (
-                <GoogleAutocomplete 
-                  query={query} 
-                  setFilters={setQuery} 
-                  onPlaceChanged={onPlaceChanged} 
-                  autocompleteRef={autocompleteRef} 
-                />
-              ) : (
-                <input
-                  type="text"
-                  className="flex-1 bg-transparent text-slate-900 placeholder-slate-400 outline-none text-base font-bold"
-                  placeholder='Try "Bangalore" or "cheap parking"...'
-                  value={query}
-                  onChange={e => setQuery(e.target.value)}
-                />
-              )}
-              <button
-                type="button"
-                onClick={() => setShowMap(true)}
-                className="flex items-center gap-1.5 border border-indigo-200 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 font-black text-[11px] uppercase tracking-wider py-2 px-3 rounded-lg transition-all whitespace-nowrap"
-                title="Find parking near my current location"
-              >
-                <Navigation className="w-3.5 h-3.5" />
-                Near Me
-              </button>
-              <button type="submit" className="btn-primary py-2 px-8 text-sm shadow-indigo-200">
-                Search
-              </button>
+          <form onSubmit={handleSearch} className="animate-slide-in px-2" style={{ animationDelay: '0.2s' }}>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 bg-white border border-slate-200 shadow-xl px-4 sm:px-5 py-3 rounded-2xl max-w-2xl mx-auto focus-within:ring-2 focus-within:ring-indigo-500/20 transition-all">
+              <div className="flex items-center gap-2 flex-1">
+                <Search className="w-5 h-5 text-slate-400 flex-shrink-0" />
+                {hasGoogleKey ? (
+                  <GoogleAutocomplete 
+                    query={query} 
+                    setFilters={setQuery} 
+                    onPlaceChanged={onPlaceChanged} 
+                    autocompleteRef={autocompleteRef} 
+                  />
+                ) : (
+                  <input
+                    type="text"
+                    className="flex-1 bg-transparent text-slate-900 placeholder-slate-400 outline-none text-base font-bold"
+                    placeholder='Try "Bangalore" or "cheap parking"...'
+                    value={query}
+                    onChange={e => setQuery(e.target.value)}
+                  />
+                )}
+              </div>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => setShowMap(true)}
+                  className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 border border-indigo-200 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 font-black text-[11px] uppercase tracking-wider py-2 px-3 rounded-lg transition-all whitespace-nowrap"
+                  title="Find parking near my current location"
+                >
+                  <Navigation className="w-3.5 h-3.5" />
+                  Near Me
+                </button>
+                <button type="submit" className="flex-1 sm:flex-none btn-primary py-2 px-6 text-sm shadow-indigo-200">
+                  Search
+                </button>
+              </div>
             </div>
           </form>
           {/* Quick vehicle filters */}
-          <div className="flex flex-wrap items-center justify-center gap-4 mt-8 animate-slide-in" style={{ animationDelay: '0.3s' }}>
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 mt-6 sm:mt-8 animate-slide-in px-2" style={{ animationDelay: '0.3s' }}>
             <button
               onClick={() => navigate('/search?vehicleType=car')}
               className="px-6 py-3 bg-white border border-slate-200 rounded-2xl text-[11px] font-black uppercase tracking-widest text-slate-600 hover:border-indigo-500 hover:text-indigo-600 transition-all flex items-center gap-2.5 shadow-sm group"
@@ -324,18 +328,17 @@ export default function HomePage() {
         )}
       </section>
 
-      {/* ── Earnings Calculator (Hackathon Wow Feature) ──────────────────── */}
-      <section className="py-24 px-4 bg-slate-900 overflow-hidden relative">
+      <section className="py-16 sm:py-24 px-4 bg-slate-900 overflow-hidden relative">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-500/20 rounded-full blur-[120px]" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-[120px]" />
         
         <div className="max-w-6xl mx-auto relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <div>
-              <h2 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight tracking-tighter">
+              <h2 className="text-3xl sm:text-4xl md:text-6xl font-black text-white mb-6 leading-tight tracking-tighter">
                 Turn your empty space into <span className="text-emerald-400">passive income</span>
               </h2>
-              <p className="text-slate-400 text-lg mb-8 max-w-lg font-medium leading-relaxed">
+              <p className="text-slate-400 text-base sm:text-lg mb-8 max-w-lg font-medium leading-relaxed">
                 Whether it's a spare driveway, a garage, or a commercial lot, Parky helps you monetize it with zero effort.
               </p>
               <div className="flex flex-col gap-4">
@@ -357,12 +360,12 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-8 md:p-12 shadow-2xl">
-              <h3 className="text-2xl font-black text-white mb-8 flex items-center gap-3">
+            <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 sm:p-8 md:p-12 shadow-2xl">
+              <h3 className="text-xl sm:text-2xl font-black text-white mb-6 sm:mb-8 flex items-center gap-3">
                 <Zap className="w-6 h-6 text-emerald-400" /> Earnings Calculator
               </h3>
               
-              <div className="space-y-10">
+              <div className="space-y-8 sm:space-y-10">
                 <div>
                   <div className="flex justify-between mb-4">
                     <label className="text-xs font-black text-slate-400 uppercase tracking-widest">Number of Slots</label>
@@ -382,12 +385,12 @@ export default function HomePage() {
                 <div className="pt-6 border-t border-white/10">
                   <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-2 text-center">Estimated Monthly Earnings</p>
                   <div className="text-center">
-                    <span className="text-5xl md:text-7xl font-black text-white tracking-tighter">₹{earnings.toLocaleString()}</span>
+                    <span className="text-4xl sm:text-5xl md:text-7xl font-black text-white tracking-tighter">₹{earnings.toLocaleString()}</span>
                     <span className="text-emerald-400 text-lg font-bold ml-2">/mo*</span>
                   </div>
                 </div>
 
-                <button onClick={() => navigate('/register')} className="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-900 py-5 rounded-2xl font-black tracking-widest uppercase text-xs transition-all shadow-lg shadow-emerald-500/20">
+                <button onClick={() => navigate('/register')} className="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-900 py-4 sm:py-5 rounded-2xl font-black tracking-widest uppercase text-xs transition-all shadow-lg shadow-emerald-500/20">
                   Start Listing Your Space
                 </button>
               </div>

@@ -1,21 +1,23 @@
 /**
  * components/Sidebar.jsx – Collapsible sidebar for Host and Admin dashboards
+ * Mobile: slide-in drawer with overlay | Desktop: fixed left sidebar
  */
+import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
   LayoutDashboard, PlusSquare, List, CalendarCheck,
   DollarSign, Users, Shield, AlertTriangle, BookOpen,
-  LogOut, ChevronRight,
+  LogOut, ChevronRight, Menu, X,
 } from 'lucide-react';
 import logo from '../assets/logoparky.png';
 
 const hostLinks = [
-  { to: '/host/dashboard',  icon: LayoutDashboard, label: 'Dashboard' },
+  { to: '/host/dashboard',   icon: LayoutDashboard, label: 'Dashboard' },
   { to: '/host/add-listing', icon: PlusSquare,      label: 'Add Listing' },
-  { to: '/host/listings',   icon: List,             label: 'My Listings' },
-  { to: '/host/requests',   icon: CalendarCheck,    label: 'Booking Requests' },
-  { to: '/host/earnings',   icon: DollarSign,       label: 'Earnings' },
+  { to: '/host/listings',    icon: List,             label: 'My Listings' },
+  { to: '/host/requests',    icon: CalendarCheck,    label: 'Booking Requests' },
+  { to: '/host/earnings',    icon: DollarSign,       label: 'Earnings' },
 ];
 
 const adminLinks = [
@@ -29,19 +31,26 @@ const adminLinks = [
 export default function Sidebar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const links = user?.role === 'admin' ? adminLinks : hostLinks;
+  const [open, setOpen] = useState(false);
+
+  const links     = user?.role === 'admin' ? adminLinks : hostLinks;
   const roleLabel = user?.role === 'admin' ? 'Admin Panel' : 'Host Panel';
   const roleColor = user?.role === 'admin' ? 'text-indigo-600' : 'text-emerald-600';
 
-  return (
-    <aside className="w-64 min-h-screen bg-white border-r border-slate-200 flex flex-col py-6 px-4 sticky top-0">
-      {/* Logo */}
-      <div className="flex items-center gap-2.5 px-2 mb-8">
-        <img src={logo} alt="Parky Logo" className="w-10 h-10 object-contain" />
-        <div>
-          <p className="text-lg font-bold text-gradient leading-none">Parky</p>
-          <p className={`text-[10px] font-black uppercase tracking-widest mt-1 ${roleColor}`}>{roleLabel}</p>
+  const SidebarContent = () => (
+    <>
+      {/* Logo + close on mobile */}
+      <div className="flex items-center justify-between px-2 mb-8">
+        <div className="flex items-center gap-2.5">
+          <img src={logo} alt="Parky Logo" className="w-10 h-10 object-contain" />
+          <div>
+            <p className="text-lg font-bold text-gradient leading-none">Parky</p>
+            <p className={`text-[10px] font-black uppercase tracking-widest mt-1 ${roleColor}`}>{roleLabel}</p>
+          </div>
         </div>
+        <button onClick={() => setOpen(false)} className="md:hidden text-slate-400 hover:text-slate-700">
+          <X className="w-5 h-5" />
+        </button>
       </div>
 
       {/* Nav links */}
@@ -50,6 +59,7 @@ export default function Sidebar() {
           <NavLink
             key={to}
             to={to}
+            onClick={() => setOpen(false)}
             className={({ isActive }) => isActive ? 'nav-item-active' : 'nav-item'}
           >
             <Icon className="w-4 h-4" />
@@ -77,6 +87,44 @@ export default function Sidebar() {
           <LogOut className="w-4 h-4" /> Logout
         </button>
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      {/* ── Mobile hamburger button (shows when sidebar is closed) ── */}
+      {!open && (
+        <button
+          onClick={() => setOpen(true)}
+          className="md:hidden fixed bottom-6 left-4 z-50 w-12 h-12 bg-indigo-600 text-white rounded-2xl shadow-xl flex items-center justify-center"
+          aria-label="Open menu"
+        >
+          <Menu className="w-5 h-5" />
+        </button>
+      )}
+
+      {/* ── Mobile overlay backdrop ── */}
+      {open && (
+        <div
+          className="md:hidden fixed inset-0 bg-black/40 z-40 backdrop-blur-sm"
+          onClick={() => setOpen(false)}
+        />
+      )}
+
+      {/* ── Sidebar panel ── */}
+      <aside
+        className={`
+          fixed md:sticky top-0 left-0 z-50 md:z-auto
+          w-64 h-screen md:min-h-screen
+          bg-white border-r border-slate-200
+          flex flex-col py-6 px-4
+          transition-transform duration-300 ease-in-out
+          ${open ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+          overflow-y-auto
+        `}
+      >
+        <SidebarContent />
+      </aside>
+    </>
   );
 }

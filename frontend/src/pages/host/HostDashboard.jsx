@@ -41,7 +41,7 @@ export default function HostDashboard() {
   return (
     <div className="flex min-h-screen">
       <Sidebar />
-      <main className="flex-1 p-8 overflow-y-auto">
+      <main className="flex-1 p-4 sm:p-6 md:p-8 overflow-y-auto pb-20 md:pb-8">
         <div className="mb-8">
           <h1 className="section-title">Welcome back, {user?.name?.split(' ')[0]}! 👋</h1>
           <p className="section-sub">Here's what's happening with your listings</p>
